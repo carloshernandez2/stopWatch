@@ -25,7 +25,7 @@ The purpose of the proyect is to use JavaScript classes to build an accurate sto
 
 ## Setup
 
-[Contact](https://carloshernandez2.github.io/stopWatch/)
+[Home page in GitHub Pages](https://carloshernandez2.github.io/stopWatch/)
 
 ## Code Examples
 
