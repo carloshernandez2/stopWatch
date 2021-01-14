@@ -9,17 +9,18 @@ class StopWatch {
     // difference in time from the point where the user pressed stop, to when he pressed start again
     static difAdded = 0;
     //  variable used to make sure that the user can only set the interval on the loop function once, avoiding unexpected behavior if the user presses the start button more than once
-    static dontStartTwice = 0;
+    static dontStartTwice = [0,1];
     constructor() {
         
     }
 
     // sets an interval to update the stopwatch as fast as it can asynchronously
     start(clock) {
-        if (StopWatch.dontStartTwice === 0){
+        if (StopWatch.dontStartTwice[0] === 0){
             this._interval = setInterval(this.loop, 0, clock);
         }
-        StopWatch.dontStartTwice = 1;
+        StopWatch.dontStartTwice[0] = 1;
+        StopWatch.dontStartTwice[1] = 0;
     }
 
     get interval() {
@@ -70,9 +71,12 @@ class StopWatch {
 
     // clears the interval to stop the stopwatch and records the stop time in string format for it to be caught only once by the loop method. it does the same for dontStartTwice(property).
     stop(interval) {
-        StopWatch.timeStopped = Date.now().toString();
-        clearInterval(interval);
-        StopWatch.dontStartTwice = 0;
+        if (StopWatch.dontStartTwice[1] === 0){
+            StopWatch.timeStopped = Date.now().toString();
+            clearInterval(interval);
+            StopWatch.dontStartTwice[0] = 0;
+            StopWatch.dontStartTwice[1] = 1;
+        }
     }
 
     // resets all conditions
@@ -83,7 +87,7 @@ class StopWatch {
         StopWatch.startTime = 0;
         StopWatch.timeStopped = 0;
         StopWatch.difAdded = 0;
-        StopWatch.dontStartTwice = 0;
+        StopWatch.dontStartTwice = [0,1];
     }
 }
 
